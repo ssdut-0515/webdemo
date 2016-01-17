@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+   <constant name="struts.devMode" value="false" />
+   <constant name="struts.objectFactory" value="spring" />
+   <constant name="struts.custom.i18n.resources" value="msgResource"></constant> 
+
+   <package name="helloworld" extends="struts-default">
+       <default-action-ref name="index"/>  
+        <action name="index">  
+            <result>/login.jsp</result>      <!-- index.htm为项目根目录的默认页面 -->  
+      </action>
+      
+      <action name="login"
+            class="loginAction">
+            <result name="success">/jsp/demo.jsp</result>
+            <result name="error">/jsp/error.jsp</result>
+      </action>
+   </package>
+   
+   <package name="ajax" extends="json-default">
+        <action name="ajaxJson"
+            class="ajaxJsonAction"
+            method="checkName">
+            <result type="json"></result>
+      </action>
+   </package>
+</struts>
