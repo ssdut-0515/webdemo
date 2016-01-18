@@ -1,0 +1,133 @@
+先以加载spring为例子看看加载顺序的作用：
+
+Spring加载可以利用ServletContextListener 实现，也可以采用load-on-startup Servlet 实现，但比如filter 需要用到 bean ，但加载顺序是： 先加载filter 后加载spring，则filter中初始化操作中的bean为null；所以，如果过滤器中要使用到 bean，此时就可以根据加载顺序listener>filter>servlet，将spring 的加载 改成 Listener的方式。
+
+利用ServletContextListener实现：
+
+<servlet>
+     <servlet-name>context</servlet-narne>
+     <servlet-class>
+org.springframework.web.context.ContextLoaderServlet
+     </servlet-class>
+     <load-on-startup>1</load-on-startup>
+ </servlet>
+
+采用load-on-startup Servlet 实现：
+
+
+<listener>
+<listener-class>
+org.springframework.web.context.ContextLoaderListener
+</listener-class>
+ </listener>
+
+
+首先可以确定的一点是加载顺序与它们在web.xml里出现的次序无关，即不会因为filter写在listener之前而先加载fiter等等.就<context-param>、<listener>、<filter>、<servlet>四种节点而言，启动服务器时的加载顺序是context-param > listener > filter > servlet。
+
+首先是<context-param>,启动一个WEB项目的时候，WEB容器会去读取它的配置文件web.xml，读取<listener>和<context-param>两个结点，它用于向 ServletContext 提供键值对，即应用程序上下文信息。例如我们的 listener, filter 等在初始化时会用到这些上下文中的信息。
+
+例如：在监听中会有contextInitialized(ServletContextEvent args)初始化方法,在这个方法中获得：
+
+ServletContext = ServletContextEvent.getServletContext();
+
+context-param的值 = ServletContext.getInitParameter("context-param的键"); 
+
+ServletContext = ServletContextEvent.getServletContext(); 
+
+context-param的值 = ServletContext.getInitParameter("context-param的键");
+
+它包含两个子元素：param-name,param-value,
+
+前者用来设置context的名字，后者用来设置其值。例如：
+<context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath*:/applicationContext.xml
+            classpath*:/applicationContext-security.xml
+        </param-value>
+ </context-param> 
+
+当param-value有多个值时，可以用空格或逗号隔开，或通配符。
+
+其次是listener, listener元素用来定义Listener接口,它的主要子元素为<listener-class>
+
+<listen-class>Listener的类名称</listener-class>定义Listener的类名称.例如: com.foo.hello
+
+范例：
+
+<listener>
+<listener-class>
+org.springframework.web.context.ContextLoaderListener
+</listener-class>
+ </listener>
+
+
+接着是filter
+
+filter元素用来声明filter的相关设定.filter元素除了下面介绍的的子元素之外,还包括<icon>,<display-name> ,
+
+<description>,<init-param>,其用途一样.
+
+<filter-name>Filter的名称</filter-name>定义Filter的名称.
+
+<filter-class>Filter的类名称</filter-class>定义Filter的类名称.例如:com.foo.hello
+
+<filter-mapping>
+
+filter-mapping 元素的两个主要子元素filter-name和url-pattern.用来定义Filter所对应的URL.
+
+<filter-name>Filter的名称</filter-name>定义Filter的名称.
+
+<url-pattern>URL</url-pattern>Filter所对应的RUL.
+
+例如:< url-pattern>/Filter/Hello</url-pattern>
+
+<servlet-name>Servlet的名称< servlet-name>定义servlet的名称.
+
+<dispatcher>REQUEST|INCLUDE|FORWARD|ERROR</disaptcher>设定Filter对应的请求方式,有RQUEST,INCLUDE,FORWAR,ERROR四种,默认为REQUEST.
+
+范例：
+<filter>
+     <filter-name>
+        hibernateOpenSessionInViewFilter
+     </filter-name>
+     <filter-class>
+        org.springframework.orm.hibernate3.support.OpenSessionInViewFilter
+     </filter-class>
+ </filter>
+ <filter-mapping>
+     <filter-name>
+        hibernateOpenSessionInViewFilter
+     </filter-name>
+     <url-pattern>*.action</url-pattern>
+     <dispatcher>REQUEST</dispatcher>
+     <dispatcher>FORWARD</dispatcher>
+ </filter-mapping> 
+
+对于某类配置节点而言，与它们出现的顺序是有关的。以 filter为例，web.xml 中当然可以定义多个 filter与 filter 相关的一个配置节是 filter-mapping，这里一定要注意，对于拥有相同 filter-name 的 filter 和 filter-mapping 配置节而言，filter-mapping 必须出现在 filter 之后，否则当解析到 filter-mapping 时，它所对应的 filter-name 还未定义。web 容器启动时初始化每个 filter 时，是按照 filter 配置节出现的顺序来初始化的，当请求资源匹配多个 filter-mapping 时，filter 拦截资源是按照filter-mapping 配置节出现的顺序来依次调用doFilter() 方法的。
+
+最后是servlet
+
+     <servlet></servlet> 用来声明一个servlet的数据，主要有以下子元素：
+
+     <servlet-name></servlet-name> 指定servlet的名称
+
+     <servlet-class></servlet-class> 指定servlet的类名称
+
+     <jsp-file></jsp-file> 指定web站台中的某个JSP网页的完整路径
+
+     <init-param></init-param> 用来定义参数，可有多个init-param。在servlet类中通过getInitParamenter(String name)方法访问初始化参数
+
+     <load-on-startup></load-on-startup>指定当Web应用启动时，装载Servlet的次序。
+
+<servlet-mapping></servlet-mapping>服务器一般为servlet提供一个缺省的URL：http://host/webAppPrefix/servlet/ServletName。
+
+但是，常常会更改这个URL，以便servlet可以访问初始化参数或更容易地处理相对URL。在更改缺省URL时，使用servlet-mapping元素。
+
+用来定义servlet所对应的URL，包含两个子元素   
+
+       <servlet-name></servlet-name> 指定servlet的名称   
+
+       <url-pattern></url-pattern> 指定servlet所对应的URL 
+
+其中的<load-on-startup></load-on-startup>当值为正数或零时：Servlet容器先加载数值小的servlet，再依次加载其他数值大的servlet. 当值为负或未定义：Servlet容器将在Web客户首次访问这个servlet时加载它。
