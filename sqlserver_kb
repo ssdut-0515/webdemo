@@ -1,3 +1,6 @@
 about sql server dynamic sql and sql injection
 
 http://www.sommarskog.se/dynamic_sql.html
+
+create partitioned table
+https://msdn.microsoft.com/en-us/library/ms188730.aspx
