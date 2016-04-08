@@ -1,0 +1,12 @@
+Question:
+Maven not able to download dependency
+
+Answer:
+1. After a failed attempt, maven will leave a small file in your local .m2 repository that will prevent any attempt to re-download the file unless the update interval has elapsed or you force the updates using the maven -U switch described in other answers.
+Just delete the folder for that artifact in your local m2 repository and update you project; a new download attempt will trigger.
+rm -rf ~/.m2/repository/com/caucho/hessian/3.1.5
+
+2.Open a command prompt, go to your project directory and run: mvn eclipse:eclipse -DdownloadSources=true -DdownloadJavadocs=true
+
+The eclipse:eclipse portion will regenerate your project files etc, the last 2 properties are more for convenience but I like downloading the sources and javadoc.
+
