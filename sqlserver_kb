@@ -4,3 +4,6 @@ http://www.sommarskog.se/dynamic_sql.html
 
 create partitioned table
 https://msdn.microsoft.com/en-us/library/ms188730.aspx
+
+执行计划：
+http://www.cnblogs.com/fish-li/archive/2011/06/06/2073626.html
