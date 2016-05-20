@@ -11,4 +11,6 @@ I.集合框架
     答：TreeMap的key是可排序的, 需要对key排序的场景会用到TreeMap。
   5. Collection的两种迭代器，Ieterator和Enumeration，区别是Ieterator提供在迭代过程中移除元素的方法。另外对迭代的方法名进行了
      改进，hasMoreElements －> hasNext, nextElement -> next.
-  
+II. Hibernate
+  1. hibernate对象的几种状态及它们之间是怎么转换的？
+  2. Session的evict与clear的区别？
