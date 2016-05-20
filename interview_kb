@@ -1,0 +1,8 @@
+Core JAVA:
+I.集合框架
+  1.介绍一下Java集合框架。
+    答：java集合框架由Set，List和Map组成，常用的Set有HashSet，常用的List有ArrayList和LinkedList， 常用的Map有HashMap，HashTable和TreeMap
+  2.ArrayList和LinkedList的区别
+    答：ArrayList是基于数据实现的，查询性能好，插入性能低。LinkedList基于链表实现，插入性能高，查询性能低。
+  3. HashMap与HashTable的区别。
+    答：1.HashMap不是线程安全的，HashTable是线程安全的。2.HashMap允许有Null的key，HashTable不允许Null的key，put null的key会出现NullPointerException。
