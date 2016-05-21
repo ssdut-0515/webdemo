@@ -1,0 +1,5 @@
+1.查看文件atime, ctime和mtime， atime -〉access time, ctime -> change time, mtime -> modify time.
+  ls -l //查看mtime
+  ls -l --time=atime //查看atime
+  ls -l --time=ctime //查看ctime
+  
