@@ -14,6 +14,8 @@ I.集合框架
 II. Hibernate
   1. hibernate对象的几种状态及它们之间是怎么转换的？
   2. Session的evict与clear的区别？
+     evict() evicts a single object from the session. clear() evicts all the objects in the session. 
+     Calling clear() is like calling evict() on every object associated with the session.
 III. Struts
   1. Struts2的Action是线程安全的吗？
      答：Struts2中每个每个请求都会实例化一个新的Action对象，因此是线程安全的。
