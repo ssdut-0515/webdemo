@@ -1,4 +1,6 @@
-1.查看文件atime, ctime和mtime， atime -〉access time, ctime -> change time, mtime -> modify time.
+1.查看文件atime, ctime和mtime， atime -〉access time指的是文件最后被读取的时间, 
+                                ctime -> change time指的是文件本身最后被变更的时间，变更动作可以使chmod、chgrp、mv等等,
+                                mtime -> modify time指的是文件内容最后被修改的时间，修改动作可以使echo重定向、vi等等.
   ls -l //查看mtime
   ls -l --time=atime //查看atime
   ls -l --time=ctime //查看ctime
