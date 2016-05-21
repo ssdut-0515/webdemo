@@ -16,7 +16,8 @@ II. Hibernate
      答：Hibernate对象有三种状态，瞬态（transient), 游离态（detached），持久态（persistent)。 从中query出来的对象处于持久态，瞬态或者
          游离态的对象save或者saveOrUpdate之后也处于持久态；持久态或者游离态的数据delete之后变为瞬态，内存中新new出的数据也处于瞬态；
          持久态的对象evict，close或者clear之后变为游离态。
-         refer to this picture : http://img.my.csdn.net/uploads/201212/30/1356851514_2308.jpg
+         refer to this picture     : http://img.my.csdn.net/uploads/201212/30/1356851514_2308.jpg
+                  and this article : http://blog.csdn.net/communicate_/article/details/8452786
   2. Session的evict与clear的区别？
      evict() evicts a single object from the session. clear() evicts all the objects in the session. 
      Calling clear() is like calling evict() on every object associated with the session.
