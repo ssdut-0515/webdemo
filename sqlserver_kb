@@ -11,3 +11,215 @@ http://www.cnblogs.com/fish-li/archive/2011/06/06/2073626.html
 http://www.cnblogs.com/zengxiangzhan/archive/2009/12/04/1617186.html
 
 http://blog.csdn.net/china2010pan/article/details/6953498
+
+
+创建分区表
+USE ClientStatement2017;
+GO
+
+ALTER DATABASE ClientStatement2017
+ADD FILEGROUP fg1;
+GO
+
+ALTER DATABASE ClientStatement2017
+ADD FILEGROUP fg2;
+GO
+
+ALTER DATABASE ClientStatement2017
+ADD FILEGROUP fg3;
+GO
+
+ALTER DATABASE ClientStatement2017
+ADD FILEGROUP fg4; 
+GO
+
+ALTER DATABASE ClientStatement2017
+ADD FILEGROUP fg5; 
+GO
+
+ALTER DATABASE ClientStatement2017
+ADD FILEGROUP fg6; 
+GO
+
+ALTER DATABASE ClientStatement2017
+ADD FILEGROUP fg7; 
+GO
+
+ALTER DATABASE ClientStatement2017
+ADD FILEGROUP fg8; 
+GO
+
+ALTER DATABASE ClientStatement2017
+ADD FILEGROUP fg9; 
+GO
+
+ALTER DATABASE ClientStatement2017
+ADD FILEGROUP fg10; 
+GO
+
+ALTER DATABASE ClientStatement2017
+ADD FILEGROUP fg11; 
+GO
+
+ALTER DATABASE ClientStatement2017
+ADD FILEGROUP fg12; 
+GO
+
+ALTER DATABASE ClientStatement2017 
+ADD FILE 
+(
+    NAME = dat1,
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER\MSSQL\DATA\dat1.ndf',
+    SIZE = 5MB,
+    MAXSIZE = 100MB,
+    FILEGROWTH = 5MB
+)
+TO FILEGROUP fg1;
+
+ALTER DATABASE ClientStatement2017 
+ADD FILE 
+(
+    NAME = dat2,
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER\MSSQL\DATA\dat2.ndf',
+    SIZE = 5MB,
+    MAXSIZE = 100MB,
+    FILEGROWTH = 5MB
+)
+TO FILEGROUP fg2;
+
+ALTER DATABASE ClientStatement2017 
+ADD FILE 
+(
+    NAME = dat3,
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER\MSSQL\DATA\dat3.ndf',
+    SIZE = 5MB,
+    MAXSIZE = 100MB,
+    FILEGROWTH = 5MB
+)
+TO FILEGROUP fg3;
+
+ALTER DATABASE ClientStatement2017 
+ADD FILE 
+(
+    NAME = dat4,
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER\MSSQL\DATA\dat4.ndf',
+    SIZE = 5MB,
+    MAXSIZE = 100MB,
+    FILEGROWTH = 5MB
+)
+TO FILEGROUP fg4;
+
+ALTER DATABASE ClientStatement2017 
+ADD FILE 
+(
+    NAME = dat5,
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER\MSSQL\DATA\dat5.ndf',
+    SIZE = 5MB,
+    MAXSIZE = 100MB,
+    FILEGROWTH = 5MB
+)
+TO FILEGROUP fg5;
+
+ALTER DATABASE ClientStatement2017 
+ADD FILE 
+(
+    NAME = dat6,
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER\MSSQL\DATA\dat6.ndf',
+    SIZE = 5MB,
+    MAXSIZE = 100MB,
+    FILEGROWTH = 5MB
+)
+TO FILEGROUP fg6;
+
+ALTER DATABASE ClientStatement2017 
+ADD FILE 
+(
+    NAME = dat7,
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER\MSSQL\DATA\dat7.ndf',
+    SIZE = 5MB,
+    MAXSIZE = 100MB,
+    FILEGROWTH = 5MB
+)
+TO FILEGROUP fg7;
+
+ALTER DATABASE ClientStatement2017 
+ADD FILE 
+(
+    NAME = dat8,
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER\MSSQL\DATA\dat8.ndf',
+    SIZE = 5MB,
+    MAXSIZE = 100MB,
+    FILEGROWTH = 5MB
+)
+TO FILEGROUP fg8;
+
+ALTER DATABASE ClientStatement2017 
+ADD FILE 
+(
+    NAME = dat9,
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER\MSSQL\DATA\dat9.ndf',
+    SIZE = 5MB,
+    MAXSIZE = 100MB,
+    FILEGROWTH = 5MB
+)
+TO FILEGROUP fg9;
+
+ALTER DATABASE ClientStatement2017 
+ADD FILE 
+(
+    NAME = dat10,
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER\MSSQL\DATA\dat10.ndf',
+    SIZE = 5MB,
+    MAXSIZE = 100MB,
+    FILEGROWTH = 5MB
+)
+TO FILEGROUP fg10;
+
+ALTER DATABASE ClientStatement2017 
+ADD FILE 
+(
+    NAME = dat11,
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER\MSSQL\DATA\dat11.ndf',
+    SIZE = 5MB,
+    MAXSIZE = 100MB,
+    FILEGROWTH = 5MB
+)
+TO FILEGROUP fg11;
+
+ALTER DATABASE ClientStatement2017 
+ADD FILE 
+(
+    NAME = dat12,
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER\MSSQL\DATA\dat12.ndf',
+    SIZE = 5MB,
+    MAXSIZE = 100MB,
+    FILEGROWTH = 5MB
+)
+TO FILEGROUP fg12;
+
+CREATE PARTITION FUNCTION datePF (datetime)
+    AS RANGE RIGHT FOR VALUES ('20170201', '20170301', '20170401',
+               '20170501', '20170601', '20170701', '20170801', 
+               '20170901', '20171001', '20171101', '20171201') ;
+GO
+
+CREATE PARTITION SCHEME datePS
+    AS PARTITION datePF
+    TO (fg1, fg2, fg3, fg4,fg5, fg6, fg7, fg8,fg9, fg10, fg11, fg12) ;
+GO
+
+CREATE TABLE [dbo].[AcctAddrTb201603](
+	[BrchCode]     [char](4)   NOT NULL,
+	[AcctCode]     [char](10)  NOT NULL,
+	[AcctAddrType] [smallint]  NOT NULL,
+	[CustI]        [int]       NOT NULL,
+	[CustAddrType] [smallint]  NOT NULL,
+	[AddrComment]  [char](128) NOT NULL,
+	[CreationU]    [char](15)      NULL,
+	[CreationD]    [smalldatetime] NULL,
+	[LastUpdU]     [char](15)      NULL,
+	[LastUpdD]     [datetime]      NULL,
+	[ImportDate]   [datetime]      NULL
+) ON datePS (ImportDate);
+GO
+
