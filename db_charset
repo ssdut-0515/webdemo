@@ -1,0 +1,5 @@
+ SELECT SERVERPROPERTY('SqlCharSetName') -- sql server
+ 
+ sp_helpsort -- sybase
+ select id, csid, name, description from master..syscharsets
+ go
