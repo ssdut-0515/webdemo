@@ -23,6 +23,16 @@
     27903 Wed Jun 20 22:50:47 2012 
     32767 Mon Aug 27 11:21:48 2012 
 3. 获取字符串的后n个字符，echo ${var: -n}
-   eg：如果SHELL=/bin/bash
-       那么echo ${SHELL: -1}的结果为h，echo ${SHELL: -2}的结果为sh，依次类推
+   e.g：如果SHELL=/bin/bash
+       那么echo ${SHELL: -1}的结果为h，echo ${SHELL: -2}的结果为sh，依次类推，当n大于字符串的长度时返回空
+4. sed删除不匹配的行: sed '/<pattern>/!d'
+   e.g: 假设a.txt的内容为：
+        hello world.
+        kobe is the best basketball player in the world.
+        bye bye.
+        hello sed.
+        那么sed '/world/!d' a.txt的结果为
+        hello world.
+        kobe is the best basketball player in the world.
+   
   
