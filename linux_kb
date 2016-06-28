@@ -35,4 +35,7 @@
         hello world.
         kobe is the best basketball player in the world.
    
-  
+5.cut在某些情况下可以实现awk的功能
+  echo "name:andy" | cut -d: -f2
+  echo "name:andy" | awk -F: '{print $2}'
+  区别是cut的-d只能是一个字符，awk的-F可以是多个字符。
