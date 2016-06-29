@@ -1,3 +1,7 @@
+1. 正向代理与反向代理
+http://stackoverflow.com/questions/224664/difference-between-proxy-server-and-reverse-proxy-server
+
+2. web component加载顺序
 先以加载spring为例子看看加载顺序的作用：
 
 Spring加载可以利用ServletContextListener 实现，也可以采用load-on-startup Servlet 实现，但比如filter 需要用到 bean ，但加载顺序是： 先加载filter 后加载spring，则filter中初始化操作中的bean为null；所以，如果过滤器中要使用到 bean，此时就可以根据加载顺序listener>filter>servlet，将spring 的加载 改成 Listener的方式。
