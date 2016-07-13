@@ -1,0 +1,3 @@
+1.java remote debug
+  Scenario_1 : Eclipse as client, remote as server, add the following vm arguments to server jvm startup script.
+              -Xdebug -Xrunjdwp:transport=dt_socket,address=9999,server=y,suspend=n
