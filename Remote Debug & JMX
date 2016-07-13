@@ -1,3 +1,6 @@
 1.java remote debug
   Scenario_1 : Eclipse as client, remote as server, add the following vm arguments to server jvm startup script.
               -Xdebug -Xrunjdwp:transport=dt_socket,address=9999,server=y,suspend=n
+  Scenario_2 : remote debug tomcat
+              https://confluence.sakaiproject.org/display/BOOT/Setting+Up+Tomcat+For+Remote+Debugging
+              https://confluence.sakaiproject.org/display/BOOT/Debugging+Tomcat+Remotely+Using+Eclipse
