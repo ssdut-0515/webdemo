@@ -1,2 +1,5 @@
 http://machael.blog.51cto.com/829462/213477/
 http://blog.csdn.net/caisini_vc/article/details/31806293
+
+Check default configuration.
+rpm --showrc
