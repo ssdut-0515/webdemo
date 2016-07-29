@@ -4,3 +4,5 @@
   Scenario_2 : remote debug tomcat
               https://confluence.sakaiproject.org/display/BOOT/Setting+Up+Tomcat+For+Remote+Debugging
               https://confluence.sakaiproject.org/display/BOOT/Debugging+Tomcat+Remotely+Using+Eclipse
+2. Eclipse 2 debug modes.
+   http://blog.csdn.net/lishengc/article/details/6615826
