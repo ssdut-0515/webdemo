@@ -4,3 +4,5 @@ http://www.perlhowto.com/extending_the_library_path
 http://old.sebug.net/paper/books/perl/flamephoenix/perl10.htm
 3. perl text replacement.
 find . -name "$filename" | xargs perl -i -pe 's/a/b/g'
+4. Perl DBI transaction
+http://www.mysqltutorial.org/perl-mysql/perl-mysql-transaction/
