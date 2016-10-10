@@ -7,3 +7,5 @@ find . -name "$filename" | xargs perl -i -pe 's/a/b/g'
 4. Perl DBI transaction
 http://www.mysqltutorial.org/perl-mysql/perl-mysql-transaction/
 https://www.effectiveperlprogramming.com/2010/07/set-custom-dbi-error-handlers/
+5. determine if file path end with '/', if not append '/' to it.
+$filePath .= '/' unless $filePath =~ m(\\$);
