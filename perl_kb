@@ -9,3 +9,7 @@ http://www.mysqltutorial.org/perl-mysql/perl-mysql-transaction/
 https://www.effectiveperlprogramming.com/2010/07/set-custom-dbi-error-handlers/
 5. determine if file path end with '/', if not append '/' to it.
 $filePath .= '/' unless $filePath =~ m(\\$);
+6. get formatted time in perl
+   > use POSIX qw(strftime); 
+   > my $date = strftime "%b %d %Y %T %p", localtime;
+   > print "$date\n";
