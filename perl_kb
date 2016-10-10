@@ -13,3 +13,23 @@ $filePath .= '/' unless $filePath =~ m(\\$);
    > use POSIX qw(strftime); 
    > my $date = strftime "%b %d %Y %T %p", localtime;
    > print "$date\n";
+7. perl get last date of last month.
+   sub getLastDateLastMonth {
+       my $day = 24*60*60;
+       my $date = "20160401";
+       my $y=substr($date, 0, 4);
+       my $m = substr($date,4,2);
+       my $d=substr($date,6,2);
+       my $h = 0;
+       my $min = 0;
+       my $dec = 0;
+
+       my $time = timelocal($sec,$min,$h,$d,$m-1,$y);
+       $time -= $day;
+       ($sec, $min, $h, $d, $m, $y) = localtime($time);
+       $m =$m + 1;
+       $y = $y + 1900;
+       $timeStr = sprintf("%04d%02d%02d", $y,$m,$d);
+       print "$timeStr\n";
+   }
+
