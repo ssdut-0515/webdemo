@@ -1,2 +1,7 @@
 1.clone existing repository
    git clone <url>
+   e.g. git clone git@github.com:ssdut-0515/webdemo.git
+2. show changes
+   .git diff (show all tracked files changes with details)
+   .git diff --name-only (only shou all changed file names)
+
