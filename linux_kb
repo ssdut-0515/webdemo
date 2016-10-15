@@ -22,7 +22,7 @@
     25072 Sun Aug 26 03:27:03 2012 
     27903 Wed Jun 20 22:50:47 2012 
     32767 Mon Aug 27 11:21:48 2012 
-3. 获取字符串的后n个字符，echo ${var: -n}
+3. 获取字符串的后n个字符，echo ${var: -n} (注意此命令只在ksh和bash上work，在csh下不好)
    e.g：如果SHELL=/bin/bash
        那么echo ${SHELL: -1}的结果为h，echo ${SHELL: -2}的结果为sh，依次类推，当n大于字符串的长度时返回空
 4. sed删除不匹配的行: sed '/<pattern>/!d'
