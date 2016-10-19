@@ -6,3 +6,5 @@ http://howtodoinjava.com/hibernate/how-hibernate-second-level-cache-works/
 https://www.mkyong.com/hibernate/different-between-session-get-and-session-load/
 4.Hibernate query cache good understanding
 http://apmblog.dynatrace.com/2009/02/16/understanding-caching-in-hibernate-part-two-the-query-cache/
+5.Hibernate & EHCache configuration guide.
+http://howtodoinjava.com/hibernate/hibernate-ehcache-configuration-tutorial/
