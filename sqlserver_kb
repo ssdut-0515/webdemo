@@ -1,3 +1,11 @@
+获取table字段名字，类型及长度的sql
+SELECT st.name+'('+ CAST(sc.length as varchar)+')',sc.name
+FROM syscolumns sc
+INNER JOIN sysobjects so ON sc.id = so.id
+inner join systypes st on st.usertype = sc.usertype 
+WHERE so.name = 'TABLENAME'
+
+
 about sql server dynamic sql and sql injection
 
 http://www.sommarskog.se/dynamic_sql.html
