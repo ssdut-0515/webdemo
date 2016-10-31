@@ -1,6 +1,9 @@
 SSL vs. TLS
 https://www.globalsign.com/en/blog/ssl-vs-tls-difference/
 
+Disable SSL2.0 and SSL3.0
+https://support.globalsign.com/customer/portal/articles/2356063
+
 Ngix + tomcat + redis实现webserver集群部署
 http://www.cnblogs.com/lengfo/p/4260363.html
 
