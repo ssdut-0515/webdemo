@@ -40,3 +40,5 @@
   echo "name:andy" | awk -F: '{print $2}'
   区别是cut的-d只能是一个字符，awk的-F可以是多个字符。
 6.solaris下Csh的变量名最大长度为20， linux下暂时没有发现这个限制。
+7.Enter ^M in linux
+  在Bash下面Ctrl + V + M， 可以打出^M.
