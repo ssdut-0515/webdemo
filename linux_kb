@@ -42,3 +42,16 @@
 6.solaris下Csh的变量名最大长度为20， linux下暂时没有发现这个限制。
 7.Enter ^M in linux
   在Bash下面Ctrl + V + M， 可以打出^M.
+8.ways to delete all lines in vi
+  1) put the curse in the first line and press d then G.   
+     where   d : delete    
+     G : to the last line
+  2) :1,$d   
+     The : introduces a command (and moves the cursor to the bottom).   
+     The 1,$ is an indication of which lines the following command (d) should work on. 
+     In this case the range from line one to the last line (indicated by $, so you don't need to know the number of lines in the document).   
+     The final d stands for delete the indicated lines. 
+  3) :%d   
+     •: tells vi to go in command mode   
+     •% means all the line   
+     •d : delete
