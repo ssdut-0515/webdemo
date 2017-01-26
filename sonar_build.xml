@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Define Sonar target -->
+<project name="CMOT_SONAR" default="sonar" basedir="." xmlns:sonar="antlib:org.sonar.ant">
+	<property name="lib.dir" value="lib" />
+	<property name="src.dir" value="src/main/java" />
+	<property name="test.dir" value="src/test/java" />
+	<property name="test.groovy.dir" value="src/test/groovy" />
+	<property name="build.dir" value="build" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="instrumented.dir" value="${build.dir}/instrumented-classes" />
+	<property name="reports.xml.dir" value="${build.dir}/reports" />
+	<property name="cobertura.reports.dir" value="${build.dir}/creports" />
+	<property name="slib.dir" value="testlibs" />
+	<property name="cobertura.dir" value="${slib.dir}/cobertura" />
+	<property name="sonar.projectKey" value="cmot-service" />
+	<property name="sonar.projectName" value="cmot-service" />
+	<property name="sonar.projectVersion" value="1.0" />
+	<property name="sonar.language" value="java" />
+	<property name="sonar.java.source" value="1.7" />
+	<property name="sonar.sources" value="${src.dir}" />
+	<property name="sonar.tests" value="${test.dir}" />
+	<property name="sonar.binaries" value="${classes.dir}" />
+	<property name="sonar.surefire.reportsPath" value="${reports.xml.dir}" />
+	<property name="sonar.sourceEncoding" value="SHIFT-JIS" />
+	<property name="slib.dir" value="testlibs" />
+	<property name="sonar.host.url" value="http://hdcicgcmola01d.apac.nsroot.net:9000" />
+	<property name="sonar.jdbc.url" value="jdbc:h2:tcp://hdcicgcmola01d.apac.nsroot.net:9092/sonar" />
+	<property name="sonar.jdbc.driverClassName" value="org.h2.Driver" />
+	<property name="sonar.jdbc.username" value="sonar" />
+	<property name="sonar.jdbc.password" value="sonar" />
+	<!-- The following properties are required to use -->
+	<property name="sonar.dynamicAnalysis" value="reuseReports" />
+	<property name="sonar.java.coveragePlugin" value="cobertura" />
+	<property name="sonar.cobertura.reportPath" value="${cobertura.reports.dir}/coverage.xml" />
+
+	<!--   ##############Path Definition############### -->
+	<path id="xenv-classpath">
+		<pathelement path="${CPATH}" />
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<path id="cobertura.classpath">
+		<fileset dir="${cobertura.dir}">
+			<include name="cobertura*.jar" />
+			<include name="lib/**/*.jar" />
+		</fileset>
+	</path>
+	<path id="solar-ant.class.path">
+		<fileset dir="${slib.dir}" includes="*.jar"/>
+	</path>
+	<!--   ##############Path Definition############### -->
+
+	<!--   ##############Task Definition############### -->
+	<taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
+	<taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
+		<classpath refid="solar-ant.class.path" />
+	</taskdef>
+	<!--   ##############Task Definition############### -->
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+	</target>
+
+	<target name="init">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${classes.dir}"/>
+		<mkdir dir="${instrumented.dir}"/>
+		<mkdir dir="${reports.xml.dir}"/>
+		<mkdir dir="${cobertura.reports.dir}"/>
+	</target>
+		
+	<taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc">
+	    <classpath refid="solar-ant.class.path"/>
+	</taskdef>
+
+	<target name="testcompile" depends="clean, init">
+		<javac encoding="SHIFT-JIS" source="1.7" srcdir="${src.dir}"
+			destdir="${classes.dir}" classpathref="xenv-classpath" debug="on">
+			<classpath>
+				<pathelement path="${CPATH}" />
+			</classpath>
+		</javac>
+		<javac encoding="SHIFT-JIS" source="1.7" destdir="${classes.dir}"
+			classpathref="xenv-classpath" debug="on">
+			<src path="${test.dir}" />
+			<classpath refid="cobertura.classpath" />
+			<classpath refid="solar-ant.class.path" />
+			<classpath>
+				<pathelement path="${CPATH}" />
+			</classpath>
+		</javac>
+
+		<groovyc srcdir="${test.groovy.dir}" destdir="${classes.dir}">
+			<classpath refid="xenv-classpath" />
+			<classpath>
+				<pathelement path="${classes.dir}"/>
+			</classpath>
+		</groovyc>
+	</target>
+
+	<target name="instrument" depends="testcompile" description="Run Tests">
+		<delete file="cobertura.ser" />
+		<cobertura-instrument todir="${instrumented.dir}" datafile="cobertura.ser">
+			<auxClasspath>
+				<path refid="xenv-classpath"/>
+			</auxClasspath>
+			<fileset dir="${classes.dir}">
+				<include name="**/*.class" />
+				<exclude name="**/*Test.class" />
+			</fileset>
+		</cobertura-instrument>
+	</target>
+
+	<target name="test" depends="instrument">
+		<junit printsummary="on" fork="yes">
+			<sysproperty key="net.sourceforge.cobertura.datafile"
+				file="cobertura.ser" />
+
+			<!-- Note the classpath order: instrumented classes are before the original 
+				(uninstrumented) classes. This is important. -->
+			<classpath location="${instrumented.dir}" />
+			<classpath location="${classes.dir}" />
+
+			<!-- The instrumented classes reference classes used by the Cobertura runtime, 
+				so Cobertura and its dependencies must be on your classpath. -->
+			<classpath refid="cobertura.classpath" />
+			<classpath refid="solar-ant.class.path" />
+			<classpath refid="xenv-classpath" />
+			<classpath>
+				<pathelement path="${slib.dir}"/>
+			</classpath>
+
+			<formatter type="xml" />
+			<batchtest todir="${reports.xml.dir}">
+				<fileset dir="${classes.dir}">
+					<include name="**/*Test.class" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+
+
+	<target name="coverage" depends="test">
+		<!-- <cobertura-report format="html" destdir="${coverage}"
+			datafile="cobertura.ser">
+			<fileset dir="${src.dir}" includes="**/*.java" />
+		</cobertura-report> -->
+		<cobertura-report format="xml" destdir="${cobertura.reports.dir}"
+			datafile="cobertura.ser">
+			<fileset dir="${src.dir}" includes="**/*.java" />
+		</cobertura-report>
+		<!-- <cobertura-check haltonfailure="false" /> -->
+	</target>
+
+	<target name="sonar" depends="coverage">
+		<sonar:sonar />
+	</target>
+
+</project>
