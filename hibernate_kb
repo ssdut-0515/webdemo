@@ -15,3 +15,7 @@ http://howtodoinjava.com/hibernate/hibernate-ehcache-configuration-tutorial/
 
 6. Hibernate OneToMany understanding
 https://howtoprogramwithjava.com/hibernate-manytoone-unidirectional-tutorial/
+
+
+7. Pitfalls of second level cache.
+http://blog.jhades.org/setup-and-gotchas-of-the-hibernate-second-level-and-query-caches/
