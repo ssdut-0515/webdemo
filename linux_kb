@@ -66,7 +66,7 @@
        http://www.thegeekstuff.com/2010/03/awk-arrays-explained-with-5-practical-examples/
    AWk built in variables
        http://www.thegeekstuff.com/2010/01/8-powerful-awk-built-in-variables-fs-ofs-rs-ors-nr-nf-filename-fnr/?ref=binfind.com/web
-10. 
+10. 正则表达式相关
 Regex tutorial
 http://www.regular-expressions.info/
 
@@ -79,13 +79,14 @@ https://www.gnu.org/software/sed/manual/sed.html
 egrep()
 http://www.robelle.com/smugbook/regexpr.html
 
+11. groovy unit test
 Java unit test with groovy
-https://www.ibm.com/developerworks/library/j-pg11094/
+  https://www.ibm.com/developerworks/library/j-pg11094/
 
 Testing with spock
-https://zeroturnaround.com/rebellabs/using-spock-to-test-groovy-and-java-applications/
+  https://zeroturnaround.com/rebellabs/using-spock-to-test-groovy-and-java-applications/
 
-http://thejavatar.com/testing-with-spock/
+  http://thejavatar.com/testing-with-spock/
 
-  
-
+12. linux network bridge
+   http://blog.chinaunix.net/uid-21556133-id-122081.html
