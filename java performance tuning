@@ -1,0 +1,2 @@
+java performance tuning vm args
+-ms1024M -mx1024M  -Xloggc:C:/temp/generateReport.gc -XX:+PrintGCDetails -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=C:/temp/generateReport.hprof
