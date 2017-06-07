@@ -1,0 +1,21 @@
+1. build docker image, run below command under a folder with a Dockerfile in it. Please refer to https://docs.docker.com/get-started/part2/#build-the-app for Dockerfile format.
+   $ docker build -t <friendlyhello> .
+2. upload image to registry
+    $ docker login
+	    ...
+	$ docker tag friendlyhello username/repository:tag
+	$ docker push username/repository:tag
+3. Create VMs
+   $ docker-machine create --driver virtualbox myvm1
+   $ docker-machine create --driver virtualbox myvm2
+4. introduce swarm manager
+   $ docker-machine ssh myvm1 "docker swarm init"
+   $ docker-machine ssh myvm1 "docker swarm init --advertise-addr 192.168.99.100:2377" (specify ip and port explicitly)
+5. add worker nodes to swarm
+   $ docker-machine ssh myvm2 "docker swarm join \
+     --token <token> \
+     <ip>:<port>"
+6. copy docker-compose.yml to swarm manager
+   $ docker-machine scp docker-compose.yml myvm1:~
+7. deploy app on a swarm cluster
+   $ docker-machine ssh myvm1 "docker stack deploy -c docker-compose.yml getstartedlab"
