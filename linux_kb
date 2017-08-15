@@ -66,6 +66,8 @@
        http://www.thegeekstuff.com/2010/03/awk-arrays-explained-with-5-practical-examples/
    AWk built in variables
        http://www.thegeekstuff.com/2010/01/8-powerful-awk-built-in-variables-fs-ofs-rs-ors-nr-nf-filename-fnr/?ref=binfind.com/web
+   通过建库脚本字段自动生成proto字段   
+   awk -F"'" '{split($1,a," ");print "string "a[1]" = "FNR"; //"$2}' test
 10. 正则表达式相关
 Regex tutorial
 http://www.regular-expressions.info/
