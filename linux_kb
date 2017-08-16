@@ -68,6 +68,9 @@
        http://www.thegeekstuff.com/2010/01/8-powerful-awk-built-in-variables-fs-ofs-rs-ors-nr-nf-filename-fnr/?ref=binfind.com/web
    通过建库脚本字段自动生成proto字段   
    awk -F"'" '{split($1,a," ");print "string "a[1]" = "FNR"; //"$2}' test
+   
+   通过Domain字段自动生成FromGrpc方法   
+   awk -F" " '{gsub(/;/,"",$3);print "tradingStockInOrderDetail."$3" = stockInOrderDetail.get_"$3"();"}' test
 10. 正则表达式相关
 Regex tutorial
 http://www.regular-expressions.info/
