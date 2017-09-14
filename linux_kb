@@ -97,3 +97,20 @@ Testing with spock
 
 12. linux network bridge
    http://blog.chinaunix.net/uid-21556133-id-122081.html
+   
+13. curl测试REST API
+    #!/bin/bash
+
+    TOKEN='eyJhbGciOiJIUzUxMiJ9.eyJjcmVhdGVkIjoxNTA1Mzc4NDY1ODI3LCJzbmFtZSI6Iua1i-ivleS-m-W6lOWVhiIsIm5hbWUiOiJ0ZXN0VXNlcjEiLCJhZG1pbiI6MiwiaWQiOjkzMywic2lkIjo2NDgsInN0YXR1cyI6Mn0.kzkUCtULommm25-c37r8JtHYqVay_1DEnipj0iuS7Qpd-DL0eHYTHv7dLR6ycO2XfXjRiitUrZuhVzo0vb9OBQ'
+
+    CONTENT_TYPE='application/json'
+
+    DATA='{"hName":"","pagination": {"pageNo" : 1,"pageSize" : 10}}'
+
+    HOST="192.168.1.21"
+
+    PORT="8080"
+
+    API="trading/order/list"
+
+    curl -X POST -H "Authorization:$TOKEN" -H "Content-Type:$CONTENT_TYPE" --data "$DATA" "http://$HOST:$PORT/api1/api/$API"
