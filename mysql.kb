@@ -1,0 +1,6 @@
+MYSQL从binlog中恢复数据
+1.在mysql server端启用binlog
+  > 去掉linux下my.cnf，windows下%PROGRAMDATA%\MySQL\MySQL Server 5.7\my.ini文件中的log-bin注释。
+  > 在my.cnf或my.ini下设置server-id
+2. 通过binlog恢复数据，默认binlog的文件保存在my.cnf或my.ini的datadir指定的路径下
+  mysqlbinlog --stop-position=11306 LAPTOP-FBKM6C07-bin.000001 | mysql -u root -p mydb
