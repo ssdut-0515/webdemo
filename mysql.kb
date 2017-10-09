@@ -4,3 +4,5 @@ MYSQL从binlog中恢复数据 (https://dev.mysql.com/doc/refman/5.7/en/mysqlbinl
   > 在my.cnf或my.ini下设置server-id
 2. 通过binlog恢复数据，默认binlog的文件保存在my.cnf或my.ini的datadir指定的路径下
   mysqlbinlog --stop-position=11306 LAPTOP-FBKM6C07-bin.000001 | mysql -u root -p mydb
+
+如要查看详细的sql statement信息，需要加上--verbose参数
