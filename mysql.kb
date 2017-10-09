@@ -1,4 +1,4 @@
-MYSQL从binlog中恢复数据
+MYSQL从binlog中恢复数据 (https://dev.mysql.com/doc/refman/5.7/en/mysqlbinlog.html)
 1.在mysql server端启用binlog
   > 去掉linux下my.cnf，windows下%PROGRAMDATA%\MySQL\MySQL Server 5.7\my.ini文件中的log-bin注释。
   > 在my.cnf或my.ini下设置server-id
