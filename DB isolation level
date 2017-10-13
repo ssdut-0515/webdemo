@@ -1,0 +1,67 @@
+https://en.wikipedia.org/wiki/Isolation_(database_systems)#Phantom_reads
+Dirty reads[edit]
+A dirty read (aka uncommitted dependency) occurs when a transaction is allowed to read data from a row that has been modified by another running transaction and not yet committed.
+
+Dirty reads work similarly to non-repeatable reads; however, the second transaction would not need to be committed for the first query to return a different result. The only thing that may be prevented in the READ UNCOMMITTED isolation level is updates appearing out of order in the results; that is, earlier updates will always appear in a result set before later updates.
+
+In our example, Transaction 2 changes a row, but does not commit the changes. Transaction 1 then reads the uncommitted data. Now if Transaction 2 rolls back its changes (already read by Transaction 1) or updates different changes to the database, then the view of the data may be wrong in the records of Transaction 1.
+
+Transaction 1	Transaction 2
+/* Query 1 */
+SELECT age FROM users WHERE id = 1;
+/* will read 20 */
+/* Query 2 */
+UPDATE users SET age = 21 WHERE id = 1;
+/* No commit here */
+/* Query 1 */
+SELECT age FROM users WHERE id = 1;
+/* will read 21 */
+ROLLBACK; /* lock-based DIRTY READ */
+But in this case no row exists that has an id of 1 and an age of 21.
+
+Non-repeatable reads[edit]
+A non-repeatable read occurs, when during the course of a transaction, a row is retrieved twice and the values within the row differ between reads.
+
+Non-repeatable reads phenomenon may occur in a lock-based concurrency control method when read locks are not acquired when performing a SELECT, or when the acquired locks on affected rows are released as soon as the SELECT operation is performed. Under the multiversion concurrency control method, non-repeatable reads may occur when the requirement that a transaction affected by a commit conflict must roll back is relaxed.
+
+Transaction 1	Transaction 2
+/* Query 1 */
+SELECT * FROM users WHERE id = 1;
+/* Query 2 */
+UPDATE users SET age = 21 WHERE id = 1;
+COMMIT; /* in multiversion concurrency
+   control, or lock-based READ COMMITTED */
+/* Query 1 */
+SELECT * FROM users WHERE id = 1;
+COMMIT; /* lock-based REPEATABLE READ */
+In this example, Transaction 2 commits successfully, which means that its changes to the row with id 1 should become visible. However, Transaction 1 has already seen a different value for age in that row. At the SERIALIZABLE and REPEATABLE READ isolation levels, the DBMS must return the old value for the second SELECT. At READ COMMITTED and READ UNCOMMITTED, the DBMS may return the updated value; this is a non-repeatable read.
+
+There are two basic strategies used to prevent non-repeatable reads. The first is to delay the execution of Transaction 2 until Transaction 1 has committed or rolled back. This method is used when locking is used, and produces the serial schedule T1, T2. A serial schedule exhibits repeatable reads behaviour.
+
+In the other strategy, as used in multiversion concurrency control, Transaction 2 is permitted to commit first, which provides for better concurrency. However, Transaction 1, which commenced prior to Transaction 2, must continue to operate on a past version of the database — a snapshot of the moment it was started. When Transaction 1 eventually tries to commit, the DBMS checks if the result of committing Transaction 1 would be equivalent to the schedule T1, T2. If it is, then Transaction 1 can proceed. If it cannot be seen to be equivalent, however, Transaction 1 must roll back with a serialization failure.
+
+Using a lock-based concurrency control method, at the REPEATABLE READ isolation mode, the row with ID = 1 would be locked, thus blocking Query 2 until the first transaction was committed or rolled back. In READ COMMITTED mode, the second time Query 1 was executed, the age would have changed.
+
+Under multiversion concurrency control, at the SERIALIZABLE isolation level, both SELECT queries see a snapshot of the database taken at the start of Transaction 1. Therefore, they return the same data. However, if Transaction 1 then attempted to UPDATE that row as well, a serialization failure would occur and Transaction 1 would be forced to roll back.
+
+At the READ COMMITTED isolation level, each query sees a snapshot of the database taken at the start of each query. Therefore, they each see different data for the updated row. No serialization failure is possible in this mode (because no promise of serializability is made), and Transaction 1 will not have to be retried.
+
+Phantom reads[edit]
+A phantom read occurs when, in the course of a transaction, two identical queries are executed, and the collection of rows returned by the second query is different from the first.
+
+This can occur when range locks are not acquired on performing a SELECT ... WHERE operation. The phantom reads anomaly is a special case of Non-repeatable reads when Transaction 1 repeats a ranged SELECT ... WHERE query and, between both operations, Transaction 2 creates (i.e. INSERT) new rows (in the target table) which fulfill that WHERE clause.
+
+Transaction 1	Transaction 2
+/* Query 1 */
+SELECT * FROM users
+WHERE age BETWEEN 10 AND 30;
+/* Query 2 */
+INSERT INTO users(id,name,age) VALUES ( 3, 'Bob', 27 );
+COMMIT;
+/* Query 1 */
+SELECT * FROM users
+WHERE age BETWEEN 10 AND 30;
+COMMIT;
+Note that Transaction 1 executed the same query twice. If the highest level of isolation were maintained, the same set of rows should be returned both times, and indeed that is what is mandated to occur in a database operating at the SQL SERIALIZABLE isolation level. However, at the lesser isolation levels, a different set of rows may be returned the second time.
+
+In the SERIALIZABLE isolation mode, Query 1 would result in all records with age in the range 10 to 30 being locked, thus Query 2 would block until the first transaction was committed. In REPEATABLE READ mode, the range would not be locked, allowing the record to be inserted and the second execution of Query 1 to include the new row in its results.
