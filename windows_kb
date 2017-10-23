@@ -1,0 +1,2 @@
+1.查看进程与tcp端口的对应关系
+   netstat -nao
