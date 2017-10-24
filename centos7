@@ -1,0 +1,8 @@
+1.查看网络状态
+sudo systemctl status network.service
+OR
+sudo systemctl status network
+2.重启网络服务
+sudo systemctl restart network.service
+OR
+sudo systemctl restart network
