@@ -1,0 +1,4 @@
+1.https://kubernetes.io/docs/getting-started-guides/centos/centos_manual_config/
+  按照这篇文章安装k8s集群
+2.在master上启动dashboard
+  kubectl proxy --address 0.0.0.0 --accept-hosts '.*' --port 8001
