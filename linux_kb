@@ -114,3 +114,6 @@ Testing with spock
     API="trading/order/list"
 
     curl -X POST -H "Authorization:$TOKEN" -H "Content-Type:$CONTENT_TYPE" --data "$DATA" "http://$HOST:$PORT/api1/api/$API"
+  14. netstat命令查看端口占用情况
+    Linux：netstat -ntlp
+    windows: netstat -nao
