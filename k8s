@@ -1,0 +1,11 @@
+1.查看deployments
+  kubectl get deployments -n kube-system -o wide
+  -n指定namespace，-o指定显示选项
+2.查看pods
+   kubectl get pods -n kube-system -o wide
+3.查看pod定义
+  kubectl describe pods/kubernetes-dashboard-747c4f7cf-n64jd -n kube-system
+  查看deployment定义
+  kubectl describe deployments/kubernetes-dashboard -n kube-system
+4.查看服务详情
+  kubectl -n kube-system get service kubernetes-dashboard
