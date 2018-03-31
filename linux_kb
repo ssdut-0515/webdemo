@@ -73,6 +73,21 @@
    awk -F" " '{gsub(/;/,"",$3);print "tradingStockInOrderDetail."$3" = stockInOrderDetail.get"toupper(substr($3,1,1))substr($3,2)"();"}' test
    通过Domain字段生成Grpc builder的set方法
    awk -F" " '{gsub(/;/,"",$3);print ".set"toupper(substr($3,1,1))substr($3,2)"(this."$3")"}' test
+   通过字段生成json串
+   more test | awk 'BEGIN{print "{"}{gsub(/;/,"",$3);print "\""$3"\":\""$3"\","}END{print "}"}'
+   test文件内容如下：
+   private String id;
+   private String departureCity;
+   private String arrivalCity;
+   private String departureDate;
+   private String arrivalDate;
+   private String price;
+   private String weight;
+   private String ticketPicUrl;
+   private String remarks;
+   private int userId;
+
+   
 10. 正则表达式相关
 Regex tutorial
 http://www.regular-expressions.info/
