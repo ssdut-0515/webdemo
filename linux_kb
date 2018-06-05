@@ -87,6 +87,10 @@
    private String remarks;
    private int userId;
 
+通过数据库字段生成domain对象(带@ApiModelProperty)
+sed 's/`//g' /tmp/test | awk '{gsub(/\047|,/, "", $6);print "@ApiModelProperty(\""$6"\")\nprivate String " $1";"}'
+通过数据库字段生成Swagger的@ApiImplicitParam注解
+sed 's/`//g' /tmp/test | awk '{gsub(/\047|,/, "", $6);print "@ApiImplicitParam(name=\""$1"\",value=\""$6"\",required=true,dataType=\"String\",paramType=\"body\"),"}'
    
 10. 正则表达式相关
 Regex tutorial
