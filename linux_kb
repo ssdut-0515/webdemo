@@ -69,6 +69,22 @@
    通过建库脚本字段自动生成proto字段   
    awk -F"'" '{split($1,a," ");print "string "a[1]" = "FNR"; //"$2}' test
    
+   通过Domain字段自动生成ToGrpc方法
+   sed -E 's/^[[:space:]]//;s/;//' /tmp/test | awk '{print "if (null == this."$3") \{\nm.set"toupper(substr($3,1,1))substr($3,2)"(\"\");\n\} else \{\nset"toupper(substr($3,1,1))substr($3,2)"(this."$3");\n\}"}'
+   /tmp/test内容格式如下
+   private long id;
+        private long sId;
+        private String sName;
+        private String orderNo;
+        private int buzTypeId;
+        private String buzTypeName;
+        private String venCode;
+        private String venName;
+        private String contacts;
+        private String contactsInfo;
+        private String buyer;
+        private Date planDate;
+
    通过Domain字段自动生成FromGrpc方法   
    awk -F" " '{gsub(/;/,"",$3);print "tradingStockInOrderDetail."$3" = stockInOrderDetail.get"toupper(substr($3,1,1))substr($3,2)"();"}' test
    通过Domain字段生成Grpc builder的set方法
