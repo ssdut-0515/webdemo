@@ -70,7 +70,7 @@
    awk -F"'" '{split($1,a," ");print "string "a[1]" = "FNR"; //"$2}' test
    
    通过Domain字段自动生成ToGrpc方法
-   sed -E 's/^[[:space:]]//;s/;//' /tmp/test | awk '{print "if (null == this."$3") \{\nm.set"toupper(substr($3,1,1))substr($3,2)"(\"\");\n\} else \{\nset"toupper(substr($3,1,1))substr($3,2)"(this."$3");\n\}"}'
+   sed -E 's/^[[:space:]]//;s/;//' /tmp/test | awk '{print "if (null == this."$3") \{\nm.set"toupper(substr($3,1,1))substr($3,2)"(\"\");\n\} else \{\nm.set"toupper(substr($3,1,1))substr($3,2)"(this."$3");\n\}"}'
    /tmp/test内容格式如下
    private long id;
         private long sId;
